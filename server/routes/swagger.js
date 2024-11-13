@@ -55,8 +55,6 @@
  *         description: Server error
  */
 
-
-
 /**
  * @swagger
  * /general/datasensor:
@@ -84,13 +82,27 @@
  *         description: Sorting criteria for the results
  *         schema:
  *           type: string
- *           default: '{"field":"createdAt","sort":"desc"}'  # Ví dụ về sorting
+ *           default: '{"field":"createdAt","sort":"desc"}'
  *       - name: search
  *         in: query
  *         required: false
  *         description: Search value for filtering the results (temperature, humidity, light, dust)
  *         schema:
  *           type: string
+ *       - name: startDate
+ *         in: query
+ *         required: false
+ *         description: Start date for filtering results (YYYY-MM-DD format)
+ *         schema:
+ *           type: string
+ *           format: date
+ *       - name: endDate
+ *         in: query
+ *         required: false
+ *         description: End date for filtering results (YYYY-MM-DD format)
+ *         schema:
+ *           type: string
+ *           format: date
  *     responses:
  *       200:
  *         description: List of data sensors retrieved successfully
@@ -155,6 +167,20 @@
  *         description: Search term for filtering action history by deviceName or action
  *         schema:
  *           type: string
+ *       - name: startDate
+ *         in: query
+ *         required: false
+ *         description: Start date for filtering results (YYYY-MM-DD format)
+ *         schema:
+ *           type: string
+ *           format: date
+ *       - name: endDate
+ *         in: query
+ *         required: false
+ *         description: End date for filtering results (YYYY-MM-DD format)
+ *         schema:
+ *           type: string
+ *           format: date
  *     responses:
  *       200:
  *         description: Action history retrieved successfully
@@ -184,7 +210,6 @@
  *       500:
  *         description: Server error
  */
-
 
 /**
  * @swagger

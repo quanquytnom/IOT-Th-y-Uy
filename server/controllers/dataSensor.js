@@ -15,7 +15,7 @@
 //             return sortFormatted;
 //         };
 //         const sortFormatted = Boolean(sort) ? generateSort() : {};
-        
+
 //         //convert string to number to sort
 
 //         const dataSenSors = await DataSensor.find({
@@ -75,7 +75,7 @@ import DataSensor from "../models/DataSensor.js";
 //         };
 
 //         const sortFormatted = Boolean(sort) ? generateSort() : {};
-        
+
 //         // Convert string fields to numbers for sorting
 //         const dataSenSors = await DataSensor.find({
 //             $or: [
@@ -90,9 +90,9 @@ import DataSensor from "../models/DataSensor.js";
 //         .limit(pageSize)
 //         .lean(); // Use lean for better performance, if you don't need Mongoose documents
 
-        
 
-        
+
+
 
 //         const total = await DataSensor.countDocuments({
 //             temperature: { $regex: search, $options: "i" },
@@ -109,7 +109,7 @@ import DataSensor from "../models/DataSensor.js";
 
 export const getDataSenSors = async (req, res) => {
     try {
-        const { page = 1, pageSize = 10, sort = null, search = "" } = req.query;
+        const { page = 1, pageSize = 10, sort = null, search = "", startDate, endDate } = req.query;
         //sort should look like this: { "field": "light", "sort": "desc" }
         // Generate sort object based on query parameters
         const generateSort = () => {
@@ -136,6 +136,37 @@ export const getDataSenSors = async (req, res) => {
                 ],
             }
             : {}; // If no search is provided, use an empty query to fetch all records
+
+
+        //Date logic
+        if (startDate || endDate) {
+            let start = startDate ? new Date(startDate) : null;
+            let end = endDate ? new Date(endDate) : null;
+
+            //Error from DatePicker make the pickedDate decrease 1 (Nov 06 -> Nov05)
+            //Temporary solution: increase the recieved date by 1.
+            if (start) {
+                start.setDate(start.getDate() + 1); // Increase start date by 1 day
+                start.setHours(0, 0, 0, 0); // Set to beginning of the new day
+            }
+
+            if (end) {
+                end.setDate(end.getDate() + 1); // Increase end date by 1 day
+                end.setHours(23, 59, 59, 999); // Set to the end of the new day
+            }
+
+            // Apply date filters
+            query.createdAt = {};
+            if (start) query.createdAt.$gte = start;
+            if (end) query.createdAt.$lte = end;
+
+            // Log date filters and query to verify
+            console.log("Received startDate:", startDate);
+            console.log("Received endDate:", endDate);
+            console.log("Formatted Start Date:", start ? start.toISOString() : "Not provided");
+            console.log("Formatted End Date:", end ? end.toISOString() : "Not provided");
+            console.log("Query being sent to MongoDB:", query);
+        }
 
         // Fetch data with sorting, pagination, and limit
         const dataSenSors = await DataSensor.find(query)
