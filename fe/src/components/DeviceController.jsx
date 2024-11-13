@@ -8,6 +8,8 @@ const DeviceController = ({ deviceName, staticIcon, dynamicIcon, deviceStatus })
     const [loading, setLoading] = useState(false);
     const [showError, setShowError] = useState(false);
 
+    // console.log('color check')
+    // console.log(theme.palette.neutral.grey[700])
     // Mutation hook for POST request
     const [postActionHistory] = usePostActionHistoryMutation();
 
@@ -40,7 +42,7 @@ const DeviceController = ({ deviceName, staticIcon, dynamicIcon, deviceStatus })
                 border: `2px solid ${theme.palette.background.default}`,
                 height: '100%',
                 width: '100%',
-                boxShadow: `0px 6px 20px ${isOn ? theme.palette.success.light : theme.palette.grey[10]}`,
+                boxShadow: `0px 6px 20px ${isOn ? theme.palette.success.light : theme.palette.neutral.grey[700]}`,
                 transition: 'all 0.3s ease-in-out',
                 '&:hover': {
                     boxShadow: `0px 8px 24px ${isOn ? theme.palette.success.light : theme.palette.grey[400]}`,

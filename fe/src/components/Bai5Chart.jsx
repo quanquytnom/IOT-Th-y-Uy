@@ -5,7 +5,7 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, Title, T
 // Register necessary Chart.js components
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Tooltip, Legend, CategoryScale);
 
-const SensorChart = ({ data }) => {
+const Bai5Chart = ({ data }) => {
   const theme = useTheme();
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
@@ -15,48 +15,13 @@ const SensorChart = ({ data }) => {
     labels: [], // Start with empty labels
     datasets: [
       {
-        label: "Temperature (°C)",
+        label: "Windspeed (m/s)", // Label for windspeed (using dust data)
         data: [],
         fill: false,
-        // borderColor: "#FFA726",
-        borderColor: "#EF5350",
+        borderColor: "#66BB6A", // Green color for the windspeed line
         cubicInterpolationMode: "monotone",
         pointRadius: 4,
         pointHoverRadius: 7,
-        yAxisID: "y", // Chỉ định trục Y mặc định
-      },
-      {
-        label: "Light (lx)",
-        data: [],
-        fill: false,
-        // borderColor: "#29B6F6",
-        borderColor: "#FFA726",
-        cubicInterpolationMode: "monotone",
-        pointRadius: 4,
-        pointHoverRadius: 7,
-        yAxisID: "y1", // Sử dụng trục Y thứ hai
-      },
-      {
-        label: "Humidity (g/m³)",
-        data: [],
-        fill: false,
-        // borderColor: "#66BB6A",
-        borderColor: "#29B6F6",
-        cubicInterpolationMode: "monotone",
-        pointRadius: 4,
-        pointHoverRadius: 7,
-        yAxisID: "y",
-      },
-      {
-        label: "Dusk (AQI⁺)",
-        data: [],
-        fill: false,
-        // borderColor: "#EF5350",
-        borderColor: "#66BB6A",
-        cubicInterpolationMode: "monotone",
-        pointRadius: 4,
-        pointHoverRadius: 7,
-        yAxisID: "y",
       },
     ],
   };
@@ -70,8 +35,8 @@ const SensorChart = ({ data }) => {
       options: {
         responsive: true,
         animation: {
-          duration: 1000, // Thời gian chuyển động khi cập nhật dữ liệu (mượt mà hơn)
-          easing: 'easeInOutCubic', // Hiệu ứng chuyển động 
+          duration: 1000, // Smooth transition time for updating data
+          easing: 'easeInOutCubic', // Transition effect
         },
         plugins: {
           tooltip: {
@@ -88,10 +53,10 @@ const SensorChart = ({ data }) => {
           },
           title: {
             display: true,
-            text: "Real-time Sensor Data",
+            text: "Windspeed Data",
             color: theme.palette.secondary[200], // Title text color
             font: {
-              size: 36,
+              size: 20,
               weight: 'bold',
             },
           },
@@ -100,8 +65,8 @@ const SensorChart = ({ data }) => {
           x: {
             ticks: {
               color: theme.palette.secondary[200], // X-axis labels color
-              autoSkip: true, // Tự động bỏ qua nhãn nếu cần thiết
-              maxRotation: 0, // Đảm bảo các nhãn nằm ngang
+              autoSkip: true,
+              maxRotation: 0,
             },
             title: {
               display: true,
@@ -114,36 +79,13 @@ const SensorChart = ({ data }) => {
             },
           },
           y: {
-            type: 'linear',
-            display: true,
-            position: 'left',
             ticks: {
               color: theme.palette.secondary[200], // Y-axis labels color
             },
             title: {
               display: true,
-              text: "Temperature, Humidity, Dusk",
-              color: theme.palette.secondary[200], // Title text for left y-axis
-              font: {
-                size: 14,
-                weight: 'bold',
-              },
-            },
-          },
-          y1: {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            ticks: {
-              color: theme.palette.secondary[200], // Y1-axis labels color
-            },
-            grid: {
-              drawOnChartArea: false, // Ngăn không cho lưới của trục y1 đè lên lưới của trục y
-            },
-            title: {
-              display: true,
-              text: "Light",
-              color: "#FFA726", // Đặt màu giống với dataset của Light để dễ nhận biết
+              text: "Windspeed (m/s)",
+              color: theme.palette.secondary[200], // Title text color for y-axis
               font: {
                 size: 14,
                 weight: 'bold',
@@ -151,12 +93,11 @@ const SensorChart = ({ data }) => {
             },
           },
         },
-      }
+      },
     });
 
-
     return () => {
-      chartInstance.current.destroy();
+      chartInstance.current.destroy(); // Cleanup chart instance when component unmounts
     };
   }, [theme]);
 
@@ -171,16 +112,10 @@ const SensorChart = ({ data }) => {
       if (chartInstance.current.data.labels.length >= 7) {
         chartInstance.current.data.labels.shift();
         chartInstance.current.data.datasets[0].data.shift();
-        chartInstance.current.data.datasets[1].data.shift();
-        chartInstance.current.data.datasets[2].data.shift();
-        chartInstance.current.data.datasets[3].data.shift();
       }
 
-      // Update datasets with new data
-      chartInstance.current.data.datasets[0].data.push(data.temperature);
-      chartInstance.current.data.datasets[1].data.push(data.light);
-      chartInstance.current.data.datasets[2].data.push(data.humidity);
-      chartInstance.current.data.datasets[3].data.push(data.dust);
+      // Update dataset with new data (using dust data as windspeed)
+      chartInstance.current.data.datasets[0].data.push(data.dust);
       // Add new label for each new data point
       chartInstance.current.data.labels.push(formattedTime);
 
@@ -190,14 +125,15 @@ const SensorChart = ({ data }) => {
 
   return (
     <Box
-      width="100%" height="100%"
+      width="100%"
+      height="100%"
       display="flex"
-      alignItems="center"
       justifyContent="center"
+      alignItems="center"
     >
       <canvas ref={chartRef}></canvas>
     </Box>
   );
 };
 
-export default SensorChart;
+export default Bai5Chart;

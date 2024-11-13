@@ -13,19 +13,19 @@ export const api = createApi({
         }),
 
         getDataSensors: build.query({
-            query: ({page, pageSize, sort, search}) => ({
+            query: ({page, pageSize, sort, search, startDate, endDate}) => ({
                 url: "general/datasensor",
                 method: "GET",
-                params: { page, pageSize, sort, search },
+                params: { page, pageSize, sort, search, startDate, endDate },
             }),
             providesTags: ['DataSensor'],
         }),
 
         getActionHistorys: build.query({
-            query: ({page, pageSize, sort, search}) => ({
+            query: ({ page, pageSize, sort, search, startDate, endDate }) => ({
                 url: "general/actionhistory",
                 method: "GET",
-                params: { page, pageSize, sort, search },
+                params: { page, pageSize, sort, search, startDate, endDate }, // Include startDate and endDate
             }),
             providesTags: ['ActionHistory'],
         }),

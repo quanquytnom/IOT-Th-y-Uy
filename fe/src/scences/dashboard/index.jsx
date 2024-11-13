@@ -33,6 +33,11 @@ import lightGif from "assets/ceiling-lamp.gif"
 import tvStatic from "assets/tv.png"
 import tvGif from "assets/tv.gif"
 
+import temperatureIcon from "assets/thermometer.gif"
+import brightIcon from "assets/brightness.gif"
+import humidityIcon from "assets/humidity.gif"
+import dustIcon from "assets/dust.gif"
+
 const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
@@ -218,9 +223,7 @@ const Dashboard = () => {
           title="Temperature"
           value={`${sensorValues.temperature} °C`}
           icon={
-            <DeviceThermostatOutlined
-              sx={{ color: theme.palette.secondary[300], fontSize: "52px" }}
-            />
+            <img src={temperatureIcon} alt="Temperature Icon" style={{ width: "80px", height: "80px" }} />
           }
           borderColor={getBorderColor("temperature", sensorValues.temperature)}
         />
@@ -228,9 +231,7 @@ const Dashboard = () => {
           title="Humidity"
           value={`${sensorValues.humidity} g/m³`}
           icon={
-            <WaterDrop
-              sx={{ color: theme.palette.secondary[300], fontSize: "52px" }}
-            />
+            <img src={humidityIcon} alt="Humidity Icon" style={{ width: "80px", height: "80px" }} />
           }
           borderColor={getBorderColor("humidity", sensorValues.humidity)}
         />
@@ -238,36 +239,57 @@ const Dashboard = () => {
           title="Light"
           value={`${sensorValues.light} lx`}
           icon={
-            <WbSunny
-              sx={{ color: theme.palette.secondary[300], fontSize: "52px" }}
-            />
+            // <WbSunny
+            //   sx={{ color: theme.palette.secondary[300], fontSize: "52px" }}
+            // />
+            <img src={brightIcon} alt="Brightness Icon" style={{ width: "80px", height: "80px" }} />
           }
           borderColor={getBorderColor("light", sensorValues.light)}
         />
         <StatBox
           title="Dust"
           value={`${sensorValues.dust} AQI⁺`}
-          icon={
-            <Air
-              sx={{ color: theme.palette.secondary[300], fontSize: "52px" }}
-            />
-          }
+          icon={<img src={dustIcon} alt="Dust Icon" style={{ width: "80px", height: "80px" }} />}
           borderColor={getBorderColor("dust", sensorValues.dust)}
         />
 
         {/* Row 2 Chart + DeviceController */}
+        {/* Chart */}
         <Box
           gridColumn="span 9"
-          gridRow="span 4"
+          gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
           p="1.5rem"
           borderRadius="3rem"
+          boxShadow={`0px 6px 12px ${theme.palette.neutral.grey[700]}`}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
         >
-          <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
-            Real-time Sensor Data
-          </Typography>
-          <SensorChart data={sensorValues} />
+          {/* <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
+          </Typography> */}
+          <SensorChart data={sensorValues} sx={{ boxShadow: "c2c2c2" }} />
         </Box>
+
+
+
+
+
+        {/* DeviceController */}
+        {/* <Box  gridColumn="span 3" gridRow="span 1">
+          <Typography
+            variant="h2"
+            color={theme.palette.secondary[100]}
+            fontWeight="bold"
+            sx={{ mb: "5px" }}
+          >
+            Device Controller
+          </Typography>
+          <Typography variant="h3" color={theme.palette.secondary[300]}>
+            Click on it to turn on/off
+          </Typography>
+        </Box> */}
+
         {/* Television */}
         <Box display="flex" gap="1.5rem" gridColumn="span 3" gridRow="span 1">
           <DeviceController
@@ -302,14 +324,14 @@ const Dashboard = () => {
 
 
         {/* Fan */}
-        <Box display="flex" gap="1.5rem" gridColumn="span 3" gridRow="span 1">
+        {/* <Box display="flex" gap="1.5rem" gridColumn="span 3" gridRow="span 1">
           <DeviceController
             deviceName="Fan"
             staticIcon={<img src={fanStaic} alt="Fan Icon" style={{ width: "80px", height: "80px" }} />}
             dynamicIcon={<img src={fanGif} alt="Fan Icon" style={{ width: "120px", height: "120px" }} />}
             deviceStatus={fanStatus}
           />
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

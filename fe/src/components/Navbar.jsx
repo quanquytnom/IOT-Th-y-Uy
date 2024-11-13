@@ -215,7 +215,10 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               >
                 <Typography variant="body1"><strong>Project Name:</strong> IoT Thầy Uy - N06</Typography>
                 <Typography variant="body1">
-                  <strong>GitHub Link:</strong> <a href="https://github.com/example/iot" target="_blank" rel="noopener noreferrer">https://github.com/example/iot-control</a>
+                  <strong>GitHub Link:</strong> <a href="https://github.com/quanquytnom/IOT-Th-y-Uy" target="_blank" rel="noopener noreferrer">https://github.com/quanquytnom/IOT-Th-y-Uy</a>
+                </Typography>
+                <Typography variant="body1">
+                  <strong>APIs doc:</strong> <a href="http://localhost:5001/api-docs/" target="_blank" rel="noopener noreferrer">http://localhost:5001/api-docs/</a>
                 </Typography>
               </Box>
             </Box>

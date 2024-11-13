@@ -8,6 +8,7 @@ import Layout from "scences/layout";
 import Dashboard from "scences/dashboard";
 import DataSensor from "scences/dataSensor";
 import ActionHistory from "scences/actionHistory";
+import Bai5 from "./scences/Bai5";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -26,6 +27,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard/>} />
               <Route path='/datasensor' element={<DataSensor/>} />
               <Route path='/actionhistory' element={<ActionHistory/>} />
+              <Route path='/bai5' element={<Bai5/>} />
             </Route>
           </Routes>
         </ThemeProvider>
